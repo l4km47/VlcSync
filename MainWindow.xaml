@@ -1,0 +1,56 @@
+﻿<Window x:Class="VlcSync.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:uc="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
+   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VlcSync"
+        mc:Ignorable="d" PreviewKeyDown="Window_PreviewKeyDown" PreviewMouseMove="VideoView_PreviewMouseMove" 
+        MouseMove="VideoView_PreviewMouseMove"
+        PreviewMouseDoubleClick="Window_PreviewMouseDoubleClick"
+        Background="Black" AllowsTransparency="True" WindowStyle="None"   WindowState="Maximized"
+  PreviewMouseWheel="VideoView_PreviewMouseWheel"       Title="MainWindow" Height="450" Width="800">
+    <Grid x:Name="grdmain" PreviewMouseDown="Window_PreviewMouseDoubleClick" PreviewKeyDown="Window_PreviewKeyDown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="209*"/>
+        </Grid.RowDefinitions>
+        <Border  x:Name="titlebar" PreviewMouseDown="VideoView_PreviewMouseDown" Grid.Row="0"  Background="#2e2e2e" Padding="3" BorderThickness="0 0 0 1" BorderBrush="#fff" CornerRadius="0" VerticalAlignment="Center" Height="32">
+            <StackPanel Background="#2e2e2e"  VerticalAlignment="Top"  Orientation="Horizontal">
+                <Button PreviewMouseDown="Button_Click"  Padding="3 0" BorderBrush="#FFFF0202" Foreground="#000" Background="#FFFF0202" Margin="5 3">XX</Button>
+                <Button PreviewMouseDown="Button_Click_1" Click="Button_Click_1"  Padding="3 0" Foreground="#000" Background="#FF00B3FF" Margin="5 3" BorderBrush="#FF00B3FF">FF</Button>
+                <Button PreviewMouseDown="Button_Click_2"  Padding="3 0" Foreground="#000" Background="#FF00FF04" Margin="5 3" BorderBrush="#FF00FF04">MM</Button>
+
+                <Button Visibility="Collapsed" PreviewMouseDown="Button_Click_3"  Padding="3 0" Foreground="#fff" Background="#000" Margin="5 3" BorderBrush="Transparent">Open
+                </Button>
+
+                <Button Visibility="Collapsed" PreviewMouseDown="Button_Click_4" Padding="3 0" Foreground="#fff" Background="#000" Margin="5 3" BorderBrush="Transparent">
+                    Settings</Button>
+                <TextBlock HorizontalAlignment="Center" Margin="5 3" Foreground="#fff" Text="{Binding MediaTitle}"/>
+            </StackPanel>
+
+        </Border>
+        <uc:VideoView Margin="0" PreviewMouseWheel="VideoView_PreviewMouseWheel" PreviewMouseDoubleClick="Window_PreviewMouseDoubleClick" PreviewMouseMove="VideoView_PreviewMouseMove" x:Name="VideoView" PreviewKeyDown="Window_PreviewKeyDown"
+                          Panel.ZIndex="1" Grid.Row="1" MouseMove="VideoView_MouseMove">
+
+
+            <Grid PreviewMouseMove="VideoView_PreviewMouseMove">
+                <TextBlock VerticalAlignment="Top" HorizontalAlignment="Stretch" Text="{Binding Fps}" Foreground="#fff" Margin="8" Background="Transparent"/>
+                <TextBlock Visibility="Hidden" Name="lblVolume" Foreground="#fff" VerticalAlignment="Center" HorizontalAlignment="Right"  Margin="0 0 30 0" Text="{Binding Volume}"/>
+                <ProgressBar Visibility="Hidden" Name="pbVolume" Height="200" Width="15" HorizontalAlignment="Right" Margin="10"  Value="{Binding Volume}" Maximum="{Binding VolumeMax}" Orientation="Vertical" Foreground="#4C00FF1B" Background="{x:Null}" BorderBrush="#4CBCBCBC">
+                </ProgressBar>
+                <TextBlock Name="lblpaused" Visibility="Visible" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Center" Foreground="#e2e2e2" Text=""/>
+                <StackPanel  PreviewKeyDown="Window_PreviewKeyDown" Name="controalpannel" Margin="5" VerticalAlignment="Bottom"  Orientation="Vertical" >
+                    <Slider PreviewMouseUp="seekbar_PreviewMouseUp" PreviewMouseDown="seekbar_PreviewMouseDown" ValueChanged="seekbar_ValueChanged" Maximum="{Binding Duration}" Value="{Binding CurrentDuration}" x:Name="seekbar" Margin="5 0" Height="20"/>
+                    <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                        <TextBlock Name="lbltime"  Margin="10 0" Foreground="#fff" Text="{Binding MediaTime}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Margin="5" Content="PLAY" Height="25" Width="50" VerticalAlignment="Bottom" HorizontalAlignment="Center" Name="btnPlay" Click="btnPlay_Click" />
+                        <Button Margin="5" Content="STOP" Height="25" Width="50" VerticalAlignment="Bottom" HorizontalAlignment="Center" Name="btnStop" Click="btnStop_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </uc:VideoView>
+    </Grid>
+</Window>

@@ -1,0 +1,77 @@
+﻿<Window x:Class="VlcSync.host"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+     xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:local="clr-namespace:VlcSync"
+        mc:Ignorable="d"  WindowStartupLocation="CenterScreen"
+        Title="Settings" Height="519" Width="693">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="b2v" />
+    </Window.Resources>
+    <Grid>
+        <TabControl>
+            <TabItem Header="Party settings">
+
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Margin="10 0" Orientation="Horizontal">
+                        <TextBlock Margin="0 5" Text="Sever status : "/>
+                        <TextBlock Margin="0 5" Text="{Binding ServerStatus}" Foreground="{Binding ServerStatusColor}"/>
+
+                    </StackPanel>
+                    <StackPanel Margin="10 0" Orientation="Horizontal">
+                        <TextBlock Margin="0 5" Text="My UUID : "/>
+                        <TextBlock Margin="0 5" Text="{Binding MyUUID}"/>
+                        <Button Content="Copy" Margin="10 0" Width="50" Name="btncopymyuuid" Click="btncopymyuuid_Click"/>
+                    </StackPanel>
+
+                    <StackPanel IsEnabled="{Binding isNotHosted}" Margin="10" Orientation="Horizontal">
+                        <RadioButton Margin="10 0 10 5" Checked="rbHost_Checked" Unchecked="rbHost_Unchecked" IsChecked="{Binding isHost}" Content="Host" Name="rbHost"/>
+                        <RadioButton Margin="10 0 10 5" IsChecked="{Binding isWatcher}" Content="Watch" Name="rbWatch"/>
+                    </StackPanel>
+                    <StackPanel IsEnabled="{Binding isNotHosted}" Margin="10 0 0 5" Orientation="Horizontal">
+                        <TextBlock  Width="60" Margin="0 3" Text="uuid "/>
+                        <TextBox Name="txtuuid" Margin="10  3" Text="{Binding UUID}" Width="400" HorizontalAlignment="Stretch"/>
+                        <Button Visibility="{Binding IsChecked,ElementName=rbHost,Converter={StaticResource b2v}}"  Width="100" Margin="0" Name="btnnewuuid"  Click="btnnewuuid_Click" Content="Genarate"/>
+                        <Button Visibility="{Binding IsChecked,ElementName=rbWatch,Converter={StaticResource b2v}}" HorizontalAlignment="Right" Width="100" Name="btnCheckLobby"  Click="btnCheckLobby_Click"  Content="Check Lobby"/>
+                        <TextBlock Foreground="{Binding LobbbyOkColor}" Margin="5 3" Text="{Binding LobbbyOkChar}"/>
+                    </StackPanel>
+                    <StackPanel IsEnabled="{Binding isNotHosted}" Margin="10 0 10 5" Orientation="Horizontal">
+                        <TextBlock Width="60" Margin="0 3" Text="Video "/>
+                        <TextBox Text="{Binding MediaPath}" Name="txtmediapath" Margin="10  3" Width="400" HorizontalAlignment="Stretch"/>
+                        <Button Width="100" Name="btnbrowsmedia"  Click="btnbrowsmedia_Click" Content="Select"/>
+                        <TextBlock Foreground="{Binding MediaPathOkColor}" Margin="5 3" Text="{Binding MediaPathOkChar}"/>
+                    </StackPanel>
+                    <StackPanel IsEnabled="{Binding isNotHosted}" Margin="10 0 0 5" Orientation="Horizontal">
+                        <TextBlock  Width="60" Margin="0 3" Text="Subtitle "/>
+                        <TextBox Text="{Binding MediaSubtitlePath}" Name="txtsubtitle" Margin="10  3" Width="400" HorizontalAlignment="Stretch"/>
+                        <Button Width="100" Name="btnsubtitle" Click="btnsubtitle_Click"  Content="Select"/>
+                        <TextBlock Foreground="{Binding MediaSubtitlePathOkColor}" Margin="5 3" Text="{Binding MediaSubtitlePathOkChar}"/>
+                    </StackPanel>
+
+                    <StackPanel IsEnabled="{Binding isNotHosted}" Margin="10 0 0 5" Orientation="Horizontal">
+                        <TextBlock  Width="60" Margin="0 3" Text="Host name"/>
+                        <TextBox Text="{Binding HostName}" Name="txthostname" Margin="10  3" Width="400" HorizontalAlignment="Stretch"/>
+                        <TextBlock Foreground="{Binding HostNameOkColor}" Margin="5 3" Text="{Binding HostNameOkChar}"/>
+                    </StackPanel>
+                    <StackPanel IsEnabled="{Binding isNotHosted}" Margin="10 0 0 5" Orientation="Horizontal">
+                        <TextBlock  Width="60" Margin="0 3" Text="Password "/>
+                        <PasswordBox Name="txtpassword" Margin="10  3" Width="400" HorizontalAlignment="Stretch"/>
+                        <TextBlock Foreground="{Binding PasswordOkColor}" Margin="5 3" Text="{Binding PasswordOkChar}"/>
+                    </StackPanel>
+                    <StackPanel  Margin="10 0 0 5" Orientation="Horizontal">
+                        <Button Visibility="{Binding IsChecked,ElementName=rbHost,Converter={StaticResource b2v}}" HorizontalAlignment="Left" Click="btnStartHosting_Click" Width="100" Margin="10 3" Padding="3" Name="btnStartHosting"
+                     Content="Ready Host"/>
+                        <Button Visibility="{Binding IsChecked,ElementName=rbWatch,Converter={StaticResource b2v}}" HorizontalAlignment="Left" Margin="10 3" Padding="3" Width="100" Name="btnJoin"  Click="btnJoin_Click" Content="Join Lobby"/>
+                        <Button IsEnabled="{Binding isHosted}" HorizontalAlignment="Left" Margin="10 3" Padding="3" Width="100" Name="btnStartPlayback"  Click="btnStartPlayback_Click" Content="Start Playback"/>
+                        <fa:ImageAwesome x:Name="spinner" Icon="Refresh" Visibility="{Binding Spin,ElementName=spinner,Converter={StaticResource b2v}}" Spin="{Binding isLoading}" Height="24" Width="24" />
+                    </StackPanel>
+
+                    <TextBlock Text="{Binding LobbyDetails}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="App settings" />
+        </TabControl>
+    </Grid>
+</Window>
