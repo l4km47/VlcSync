@@ -1,3 +1,3 @@
 # VlcSync
 
-watch parry app with libvlc + firebase 
+watch party app with libvlc + firebase 
